@@ -1,4 +1,4 @@
-azelensky7d4-1 ansible_host=193.40.156.67 ansible_port=28222 ansible_user=ubuntu
+azelensky7d4-1 ansible_host=193.40.156.67 ansible_port=30822 ansible_user=ubuntu
 
 [web_servers]
 azelensky7d4-1

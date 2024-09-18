@@ -1,26 +1,26 @@
 # - name: Ansible ping module
 #   ansible.builtin.ping:
-- name: Create user juri
-  ansible.builtin.user:
-    name: juri
-    create_home: yes
+# - name: Create user juri
+#   ansible.builtin.user:
+#     name: juri
+#     create_home: yes
 
-- name: Create user roman
-  ansible.builtin.user:
-    name: roman
-    create_home: yes
+# - name: Create user roman
+#   ansible.builtin.user:
+#     name: roman
+#     create_home: yes
 
-- name: Put keys into user juri
-  ansible.posix.authorized_key:
-    user: juri
-    state: present
-    key: https://github.com/hudolejev.keys
+# - name: Put keys into user juri
+#   ansible.posix.authorized_key:
+#     user: juri
+#     state: present
+#     key: https://github.com/hudolejev.keys
 
-- name: Put keys into user roman
-  ansible.posix.authorized_key:
-    user: roman
-    state: present
-    key: https://github.com/romankuchin.keys
+# - name: Put keys into user roman
+#   ansible.posix.authorized_key:
+#     user: roman
+#     state: present
+#     key: https://github.com/romankuchin.keys
 
 - name: Update APT cache
   ansible.builtin.apt:

@@ -1,3 +1,16 @@
 - name: Install package nginx
   ansible.builtin.apt:
     name: nginx
+  notify: Restart Nginx
+
+- name: Start and enable the nginx service
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: true
+
+- name: Deploy the nginx config
+  ansible.builtin.copy:
+    src: ../files/default
+    dest: /etc/nginx/sites-enabled/default
+  notify: Restart Nginx

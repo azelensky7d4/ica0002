@@ -17,6 +17,7 @@
       - python3-pip
       - python3-flask
       - python3-flask-sqlalchemy
+      - python3-pymysql
     state: present
 
 - name: Install the AGAMA application

@@ -13,4 +13,5 @@
   ansible.builtin.copy:
     src: ../files/default
     dest: /etc/nginx/sites-enabled/default
+    # validate: nginx -t -c %s
   notify: Restart Nginx

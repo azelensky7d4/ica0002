@@ -7,9 +7,12 @@
   notify: Restart uWSGI
 
 - name: Copy the uWSGI config to the server
-  ansible.builtin.copy:
-    src: ../files/agama.ini
+  ansible.builtin.template:
+    src: ../templates/agama.ini.j2
     dest: /etc/uwsgi/apps-enabled/agama.ini
+    owner: agama
+    mode: "0600"
+  no_log: true
   notify: Restart uWSGI
 
 - name: Start and enable the uWSGI service

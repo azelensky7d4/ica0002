@@ -1,4 +1,4 @@
-mysql_host: 192.168.43.127
+mysql_host: azelensky7d4-2
 mysql_database: agama
 mysql_user: agama
 mysql_password: !vault |
@@ -8,3 +8,11 @@ mysql_password: !vault |
           63656137633761666334326130623764366236363861646161616338326536326264653662646161
           3236643665306466320a663933613564323264333134323161383930366561653738306365346638
           6131
+dns_resolvers:
+  - 1.1.1.1
+  - 8.8.8.8
+  - 9.9.9.9
+acl_ica0002:
+  - 192.168.42.0/23
+  - 127.0.0.0/8
+domain_name: amogus.sus

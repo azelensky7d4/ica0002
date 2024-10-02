@@ -1,0 +1,10 @@
+- name: Stop and disable systemd-resolved service
+  ansible.builtin.service:
+    name: systemd-resolved
+    state: stopped
+    enabled: false
+
+- name: Deploy resolv.conf file
+  ansible.builtin.template:
+    src: ../templates/resolv_conf.j2
+    dest: /etc/resolv.conf

@@ -25,3 +25,13 @@
 - name: Update APT cache
   ansible.builtin.apt:
     cache_valid_time: 86400
+
+- name: Install prometheus node on all machines
+  ansible.builtin.apt:
+    name: prometheus-node-exporter
+
+- name: Start and enable the prometheus-node-exporter service
+  ansible.builtin.service:
+    name: prometheus-node-exporter
+    state: started
+    enabled: true

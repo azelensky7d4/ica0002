@@ -25,3 +25,8 @@
     - agama
     - uwsgi
     - nginx
+
+- name: Prometheus
+  hosts: prometheus
+  roles:
+    - prometheus

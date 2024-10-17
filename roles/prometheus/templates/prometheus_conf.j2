@@ -32,3 +32,22 @@ scrape_configs:
         {% for host in groups['all'] %}
         - '{{ host }}:9100'
         {% endfor %}
+  
+  - job_name: 'bind9'
+    static_configs:
+      - targets:
+        - '{{ groups['prometheus'][0] }}:9119'
+  
+  - job_name: 'mysql'
+    static_configs:
+      - targets:
+        - '{{ groups['db_servers'][0] }}:9104'
+  
+  - job_name: 'nginx'
+    static_configs:
+      - targets:
+        {% for nginx_host in groups['nginx'] %}
+        - '{{ nginx_host }}:9113'
+        {% endfor %}
+
+        

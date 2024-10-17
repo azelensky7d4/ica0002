@@ -15,6 +15,9 @@
   notify: Restart prometheus
 
 - name: Deploy prometheus starting config
+  vars:
+    prometheus_host: "{{ hostvars[groups['prometheus'][0]]['ansible_host'] }}"
+    prometheus_port: "{{ hostvars[groups['prometheus'][0]]['ansible_port'] }}"
   ansible.builtin.template:
     src: ../templates/prometheus_start.j2
     dest: /etc/default/prometheus

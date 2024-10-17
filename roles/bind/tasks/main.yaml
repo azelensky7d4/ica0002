@@ -19,3 +19,40 @@
     src: ../templates/master_zone.j2
     dest: /var/cache/bind/db.{{ domain_name }}
   notify: Apply zone file
+
+- name: Check if bind exporter is already installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/prometheus-bind9-exporter
+  register: bind_exporter_stat
+
+- name: Install Bind prometheus exporter
+  ansible.builtin.unarchive:
+    src: https://github.com/prometheus-community/bind_exporter/releases/download/v0.6.1/bind_exporter-0.6.1.linux-amd64.tar.gz
+    dest: /tmp
+    remote_src: true
+    creates: /usr/local/bin/prometheus-bind9-exporter
+
+- name: Copy bind exporter executable to bind
+  ansible.builtin.copy:
+    src: /tmp/bind_exporter-0.6.1.linux-amd64/bind_exporter
+    dest: /usr/local/bin/prometheus-bind9-exporter
+    mode: '0755'
+    remote_src: true
+  when: not bind_exporter_stat.stat.exists
+
+- name: Remove file from temporary location
+  ansible.builtin.file:
+    path: /tmp/bind_exporter-0.6.1.linux-amd64
+    state: absent
+
+- name: Deploy systemd bind9 exporter service config
+  ansible.builtin.template:
+    src: ../templates/exporter_service_conf.j2
+    dest: /etc/systemd/system/prometheus-bind9-exporter.service
+  notify: Reload systemd
+
+- name: Start and Enable prometheus-bind9-exporter
+  ansible.builtin.service:
+    name: prometheus-bind9-exporter
+    state: started
+    enabled: true

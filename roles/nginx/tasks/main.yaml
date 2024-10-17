@@ -1,13 +1,6 @@
 - name: Install package nginx
   ansible.builtin.apt:
     name: nginx
-  notify: Restart Nginx
-
-- name: Start and enable the nginx service
-  ansible.builtin.service:
-    name: nginx
-    state: started
-    enabled: true
 
 - name: Deploy the nginx config
   ansible.builtin.template:
@@ -15,3 +8,22 @@
     dest: /etc/nginx/sites-enabled/default
     # validate: nginx -t -c %s
   notify: Restart Nginx
+
+- name: Force nginx restart
+  meta: flush_handlers
+
+- name: Start and enable the nginx service
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: true
+
+- name: Install prometheus nginx exporter
+  ansible.builtin.apt:
+    name: prometheus-nginx-exporter
+
+- name: Start and enable prometheus nginx exporter
+  ansible.builtin.service:
+    name: prometheus-nginx-exporter
+    state: started
+    enabled: true

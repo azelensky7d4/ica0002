@@ -5,3 +5,7 @@
 
 - name: Apply zone file
   ansible.builtin.command: rndc reload
+
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: true

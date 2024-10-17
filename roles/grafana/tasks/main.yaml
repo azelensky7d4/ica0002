@@ -1,0 +1,54 @@
+- name: Install grafana prerequisites
+  ansible.builtin.apt:
+    name:
+      - apt-transport-https
+      - software-properties-common
+      - wget
+
+- name: Import Grafana repo GPG key
+  ansible.builtin.apt_key:
+    url: https://apt.grafana.com/gpg.key
+    state: present
+
+- name: Add Grafana repo
+  ansible.builtin.apt_repository:
+    repo: deb https://apt.grafana.com stable main
+    state: present
+
+- name: Install Grafana
+  ansible.builtin.apt:
+    name: grafana
+
+- name: Deploy grafana config
+  vars:
+    grafana_host: "{{ hostvars[groups['grafana'][0]]['ansible_host'] }}"
+    modified_port: "{{ (hostvars[groups['grafana'][0]]['ansible_port'] // 100) * 100 + 80 }}"
+  ansible.builtin.template:
+    src: ../templates/grafana.ini.j2
+    dest: /etc/grafana/grafana.ini
+  notify: Restart Grafana
+  no_log: true
+
+- name: Deploy datasources provisioning
+  ansible.builtin.template:
+    src: ../templates/datasources.yaml.j2
+    dest: /etc/grafana/provisioning/datasources/datasources.yaml
+  notify: Restart Grafana
+
+- name: Deploy dashboards provisioning
+  ansible.builtin.template:
+    src: ../templates/dashboards.yaml.j2
+    dest: /etc/grafana/provisioning/dashboards/dashboards.yaml
+  notify: Restart Grafana
+
+- name: Deploy main dashboard JSON
+  ansible.builtin.copy:
+    src: ../files/main.json
+    dest: /var/lib/grafana/dashboards/
+  notify: Restart Grafana
+
+- name: Start and enable Grafana
+  ansible.builtin.service:
+    name: grafana-server
+    state: started
+    enabled: true

@@ -1,5 +1,5 @@
-azelensky7d4-1 ansible_host=193.40.156.67 ansible_port=28222 ansible_user=ubuntu
-azelensky7d4-2 ansible_host=193.40.156.67 ansible_port=45022 ansible_user=ubuntu
+azelensky7d4-1 ansible_host=193.40.156.67 ansible_port=18222 ansible_user=ubuntu
+azelensky7d4-2 ansible_host=193.40.156.67 ansible_port=12922 ansible_user=ubuntu
 
 [db_servers]
 azelensky7d4-2
@@ -10,5 +10,12 @@ azelensky7d4-2
 [web_servers]
 azelensky7d4-1
 
+[nginx]
+azelensky7d4-1
+azelensky7d4-2
+
 [prometheus]
 azelensky7d4-2
+
+[grafana]
+azelensky7d4-1

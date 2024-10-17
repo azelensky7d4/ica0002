@@ -1,0 +1,6 @@
+[server]
+root_url = http://{{ grafana_host }}:{{ modified_port }}/grafana
+serve_from_sub_path = true
+[security]
+admin_user = {{ grafana_user }}
+admin_password = {{ grafana_password }}

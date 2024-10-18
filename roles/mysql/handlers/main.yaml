@@ -7,3 +7,9 @@
   ansible.builtin.service:
     name: prometheus-mysqld-exporter
     state: restarted
+
+- name: Start and enable mysql exporter
+  ansible.builtin.service:
+    name: prometheus-mysqld-exporter
+    state: started
+    enabled: true

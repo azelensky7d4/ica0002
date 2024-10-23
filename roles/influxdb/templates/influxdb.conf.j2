@@ -1,0 +1,29 @@
+[meta]
+  dir = "/var/lib/influxdb/meta"
+[data]
+  dir = "/var/lib/influxdb/data"
+  wal-dir = "/var/lib/influxdb/wal"
+  series-id-set-cache-size = 100
+  query-log-enabled = false
+[coordinator]
+[retention]
+[shard-precreation]
+[monitor]
+[http]
+	# User supplied HTTP response headers
+	#
+	# [http.headers]
+	#   X-Header-1 = "Header Value 1"
+	#   X-Header-2 = "Header Value 2"
+  enabled = true
+  bind-address = ":8086"
+  log-enabled = false
+  write-tracing = false
+[logging]
+[subscriber]
+[[graphite]]
+[[collectd]]
+[[opentsdb]]
+[[udp]]
+[continuous_queries]
+[tls]

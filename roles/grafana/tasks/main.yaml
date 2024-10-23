@@ -34,6 +34,7 @@
     src: ../templates/datasources.yaml.j2
     dest: /etc/grafana/provisioning/datasources/datasources.yaml
   notify: Restart Grafana
+  no_log: true
 
 - name: Deploy dashboards provisioning
   ansible.builtin.template:
@@ -41,10 +42,13 @@
     dest: /etc/grafana/provisioning/dashboards/dashboards.yaml
   notify: Restart Grafana
 
-- name: Deploy main dashboard JSON
+- name: Deploy dashboard JSONs
   ansible.builtin.copy:
-    src: ../files/main.json
+    src: "{{ item }}"
     dest: /var/lib/grafana/dashboards/
+  with_items:
+    - ../files/main.json
+    - ../files/syslog.json
   notify: Restart Grafana
 
 - name: Start and enable Grafana

@@ -1,0 +1,11 @@
+[Unit]
+Description=agama client for logging
+Documentation=no ahahahhaha
+After=network-online.target
+
+[Service]
+User=agama-client
+ExecStart=/usr/local/bin/agama-client
+
+[Install]
+WantedBy=multi-user.target

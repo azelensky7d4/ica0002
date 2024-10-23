@@ -25,6 +25,7 @@
     - agama
     - uwsgi
     - nginx
+    - agama-client
 
 - name: Prometheus
   hosts: prometheus
@@ -37,3 +38,8 @@
   roles:
     - grafana
     - nginx
+
+- name: Influxdb
+  hosts: influx
+  roles:
+    - influxdb

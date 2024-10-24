@@ -13,7 +13,6 @@
     src: ../templates/bind_conf.j2
     dest: /etc/bind/named.conf.options
   notify: Restart bind9
-
 - name: Deploy master zone file
   ansible.builtin.template:
     src: ../templates/master_zone.j2

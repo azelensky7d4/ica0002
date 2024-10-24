@@ -25,7 +25,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "ce1ojbs6b5iiod"
+        "uid": "P88D7933B22F514E0"
       },
       "fieldConfig": {
         "defaults": {
@@ -269,7 +269,7 @@
           "alias": "Info",
           "datasource": {
             "type": "influxdb",
-            "uid": "ce1ojbs6b5iiod"
+            "uid": "P88D7933B22F514E0"
           },
           "groupBy": [
             {
@@ -340,7 +340,7 @@
           "alias": "Notice",
           "datasource": {
             "type": "influxdb",
-            "uid": "ce1ojbs6b5iiod"
+            "uid": "P88D7933B22F514E0"
           },
           "groupBy": [
             {
@@ -411,7 +411,7 @@
           "alias": "Warning",
           "datasource": {
             "type": "influxdb",
-            "uid": "ce1ojbs6b5iiod"
+            "uid": "P88D7933B22F514E0"
           },
           "groupBy": [
             {
@@ -482,7 +482,7 @@
           "alias": "Error",
           "datasource": {
             "type": "influxdb",
-            "uid": "ce1ojbs6b5iiod"
+            "uid": "P88D7933B22F514E0"
           },
           "groupBy": [
             {
@@ -553,7 +553,7 @@
           "alias": "Critical",
           "datasource": {
             "type": "influxdb",
-            "uid": "ce1ojbs6b5iiod"
+            "uid": "P88D7933B22F514E0"
           },
           "groupBy": [
             {
@@ -624,7 +624,7 @@
           "alias": "Alert",
           "datasource": {
             "type": "influxdb",
-            "uid": "ce1ojbs6b5iiod"
+            "uid": "P88D7933B22F514E0"
           },
           "groupBy": [
             {
@@ -695,7 +695,7 @@
           "alias": "Emergency",
           "datasource": {
             "type": "influxdb",
-            "uid": "ce1ojbs6b5iiod"
+            "uid": "P88D7933B22F514E0"
           },
           "groupBy": [
             {
@@ -769,7 +769,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "ce1ojbs6b5iiod"
+        "uid": "P88D7933B22F514E0"
       },
       "description": "",
       "fieldConfig": {
@@ -942,7 +942,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "ce1ojbs6b5iiod"
+            "uid": "P88D7933B22F514E0"
           },
           "groupBy": [
             {
@@ -1027,7 +1027,7 @@
             "$__all"
           ]
         },
-        "datasource": "ce1ojbs6b5iiod",
+        "datasource": "P88D7933B22F514E0",
         "definition": "SHOW TAG VALUES FROM syslog WITH KEY=appname",
         "includeAll": true,
         "label": "Appname",
@@ -1049,7 +1049,7 @@
             "$__all"
           ]
         },
-        "datasource": "ce1ojbs6b5iiod",
+        "datasource": "P88D7933B22F514E0",
         "definition": "SHOW TAG VALUES FROM syslog WITH KEY=hostname",
         "includeAll": true,
         "label": "Hostname",
@@ -1071,7 +1071,7 @@
             "$__all"
           ]
         },
-        "datasource": "ce1ojbs6b5iiod",
+        "datasource": "P88D7933B22F514E0",
         "definition": "SHOW TAG VALUES FROM syslog WITH KEY=severity",
         "includeAll": true,
         "label": "Severity",
@@ -1119,6 +1119,6 @@
   "timezone": "",
   "title": "Syslog",
   "uid": "TIYeHqRgZ",
-  "version": 2,
+  "version": 3,
   "weekStart": ""
 }

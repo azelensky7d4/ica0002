@@ -19,13 +19,18 @@
   roles:
     - mysql
 
+- name: Influxdb
+  hosts: influx
+  roles:
+    - influxdb
+
 - name: Web server
   hosts: web_servers
   roles:
     - agama
     - uwsgi
     - nginx
-    - agama-client
+    - agama_client
 
 - name: Prometheus
   hosts: prometheus
@@ -38,8 +43,3 @@
   roles:
     - grafana
     - nginx
-
-- name: Influxdb
-  hosts: influx
-  roles:
-    - influxdb

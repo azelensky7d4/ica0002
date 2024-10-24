@@ -20,14 +20,6 @@
     - Reload systemd daemons
     - Restart agama-client
 
-- name: Deploy service unit description
-  ansible.builtin.template:
-    src: ../templates/agama-client.service.j2
-    dest: /etc/systemd/system/agama-client.service
-  notify:
-    - Reload systemd daemons
-    - Restart agama-client
-
 - name: Create directory /etc/agama-client/ if not present
   ansible.builtin.file:
     path: /etc/agama-client
@@ -39,7 +31,17 @@
   ansible.builtin.template:
     src: ../templates/agama-client.conf.j2
     dest: /etc/agama-client/agama-client.conf
-  notify: Restart agama-client
+  notify: 
+    - Reload systemd daemons
+    - Restart agama-client
+
+- name: Deploy service unit description
+  ansible.builtin.template:
+    src: ../templates/agama-client.service.j2
+    dest: /etc/systemd/system/agama-client.service
+  notify:
+    - Reload systemd daemons
+    - Restart agama-client
 
 - name: Start and enable agama-client
   ansible.builtin.service:

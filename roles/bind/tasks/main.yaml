@@ -13,11 +13,14 @@
     src: ../templates/bind_conf.j2
     dest: /etc/bind/named.conf.options
   notify: Restart bind9
+
 - name: Deploy master zone file
   ansible.builtin.template:
     src: ../templates/master_zone.j2
     dest: /var/cache/bind/db.{{ domain_name }}
-  notify: Apply zone file
+  notify: 
+    - Apply zone file
+    - Restart bind9
 
 - name: Check if bind exporter is already installed
   ansible.builtin.stat:

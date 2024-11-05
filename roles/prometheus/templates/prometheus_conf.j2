@@ -54,5 +54,10 @@ scrape_configs:
     static_configs:
       - targets:
         - '{{ groups['influx'][0] }}:9424'
+  
+  - job_name: 'backup'
+    static_configs:
+      - targets:
+        - 'backup.{{ domain_name }}:9111'
 
         

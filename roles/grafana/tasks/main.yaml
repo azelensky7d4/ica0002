@@ -49,6 +49,7 @@
   with_items:
     - ../files/main.json
     - ../files/syslog.json
+    - ../files/backups.json
   notify: Restart Grafana
 
 - name: Start and enable Grafana

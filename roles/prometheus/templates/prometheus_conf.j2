@@ -36,12 +36,16 @@ scrape_configs:
   - job_name: 'bind9'
     static_configs:
       - targets:
-        - '{{ groups['prometheus'][0] }}:9119'
-  
+        {% for host in groups['prometheus'] %}
+        - '{{ host }}:9119'
+        {% endfor %}
+ 
   - job_name: 'mysql'
     static_configs:
       - targets:
-        - '{{ groups['db_servers'][0] }}:9104'
+        {% for host in groups['db_servers'] %}
+        - '{{ host }}:9104'
+        {% endfor %}
   
   - job_name: 'nginx'
     static_configs:
@@ -53,7 +57,9 @@ scrape_configs:
   - job_name: 'influxdb'
     static_configs:
       - targets:
-        - '{{ groups['influx'][0] }}:9424'
+        {% for host in groups['influx'] %}
+        - '{{ host }}:9424'
+        {% endfor %}
   
   - job_name: 'backup'
     static_configs:

@@ -1,8 +1,9 @@
-azelensky7d4-1 ansible_host=193.40.156.67 ansible_port=39522 ansible_user=ubuntu
-azelensky7d4-2 ansible_host=193.40.156.67 ansible_port=30522 ansible_user=ubuntu
+azelensky7d4-1 ansible_host=193.40.156.67 ansible_port=8122 ansible_user=ubuntu
+azelensky7d4-2 ansible_host=193.40.156.67 ansible_port=9522 ansible_user=ubuntu
 
 [db_servers]
 azelensky7d4-2
+azelensky7d4-1
 
 [influx]
 azelensky7d4-2

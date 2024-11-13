@@ -1,4 +1,4 @@
-mysql_host: azelensky7d4-2
+mysql_host: "{{ groups['db_servers'] | first }}"
 mysql_database: agama
 mysql_user: agama
 mysql_password: !vault |
@@ -25,6 +25,15 @@ mysql_backup_password: !vault |
           6336353337646564650a386433616662663636313331623930646662393031316133313332653039
           3038
 
+mysql_replication_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          36383532313662303936333465653865653563373033343863323439613239646632643635366531
+          6233646336303734393239356539623666666564653364300a646135366334353062623262363435
+          31313630663838386237386561366539333863616464663839633635613936376639626563646531
+          3937666535663465620a393031613137356165613263363665653438306464313965323766623665
+          6438
+node_id: "{{ inventory_hostname.split('-') | last | int }}"
+
 dns_resolvers:
   - 1.1.1.1
   - 8.8.8.8
@@ -49,3 +58,4 @@ agama_subnet: 192.168.42.0/23
 backup_server_ip: 192.168.42.132
 backup_server_name: backup
 backup_server_ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
+mysql_backup_host: "{{ groups['db_servers'] | reject('eq', mysql_host) | first | default(mysql_host) }}"

@@ -3,26 +3,37 @@
   hosts: all
   roles:
     - init
+  tags:
+    - init
 
 - name: Dns server
   hosts: dns_servers
   roles:
     - bind
+  tags:
+    - dns
 
 - name: Name resolution
   hosts: all
   roles:
+    - resolv
+  tags:
     - resolv
 
 - name: Database server
   hosts: db_servers
   roles:
     - mysql
+  tags:
+    - db
+    - switchover
 
 - name: Influxdb
   hosts: influx
   roles:
     - influxdb
+  tags:
+    - influx
 
 - name: Web server
   hosts: web_servers
@@ -31,15 +42,22 @@
     - uwsgi
     - nginx
     - agama_client
+  tags:
+    - agama
+    - switchover
 
 - name: Prometheus
   hosts: prometheus
   roles:
     - prometheus
     - nginx
+  tags:
+    - prometheus
 
 - name: Grafana
   hosts: grafana
   roles:
     - grafana
     - nginx
+  tags:
+    - grafana

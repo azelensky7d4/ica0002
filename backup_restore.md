@@ -7,7 +7,7 @@ No TLDR, read it! ಠ_ಠ
     ansible-playbook infra.yaml
 
 # MySQL
-Restore MySQL data from the backup. Perform the following commands from the MySQL DB host (can be found in the hosts file under db_servers role):
+Restore MySQL data from the backup. Perform the following commands from the FIRST MySQL DB host (can be found in the hosts file under db_servers role):
 
     1. sudo -i
     2. sudo -u backup duplicity --no-encryption restore rsync://azelensky7d4@backup.amogus.sus/mysql /home/backup/restore/mysql

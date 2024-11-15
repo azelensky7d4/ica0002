@@ -11,7 +11,7 @@
 
 - name: Override mysql config
   ansible.builtin.template:
-    src: ../templates/mysql_config
+    src: ../templates/mysql_config.j2
     dest: /etc/mysql/mysql.conf.d/override.cnf
   notify: Restart mysql
 

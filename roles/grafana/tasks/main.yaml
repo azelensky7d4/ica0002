@@ -1,23 +1,34 @@
-- name: Install grafana prerequisites
-  ansible.builtin.apt:
-    name:
-      - apt-transport-https
-      - software-properties-common
-      - wget
+- name: Create grafana provisioning dirs
+  ansible.builtin.file:
+    name: "/opt/grafana/provisioning/{{ item }}"
+    state: directory
+  loop:
+    - dashboards
+    - datasources
 
-- name: Import Grafana repo GPG key
-  ansible.builtin.apt_key:
-    url: https://apt.grafana.com/gpg.key
-    state: present
+- name: Deploy datasources provisioning
+  ansible.builtin.template:
+    src: ../templates/datasources.yaml.j2
+    dest: /opt/grafana/provisioning/datasources/datasources.yaml
+  notify: Restart grafana container
+  no_log: true
 
-- name: Add Grafana repo
-  ansible.builtin.apt_repository:
-    repo: deb https://apt.grafana.com stable main
-    state: present
+- name: Deploy dashboards provisioning
+  ansible.builtin.template:
+    src: ../templates/dashboards.yaml.j2
+    dest: /opt/grafana/provisioning/dashboards/dashboards.yaml
+  notify: Restart grafana container
 
-- name: Install Grafana
-  ansible.builtin.apt:
-    name: grafana
+- name: Deploy dashboard JSONs
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: /opt/grafana/provisioning/dashboards/
+  with_items:
+    - ../files/main.json
+    - ../files/syslog.json
+    - ../files/backups.json
+    - ../files/mysql.json
+  notify: Restart grafana container
 
 - name: Deploy grafana config
   vars:
@@ -25,36 +36,13 @@
     modified_port: "{{ (hostvars[groups['grafana'][0]]['ansible_port'] // 100) * 100 + 80 }}"
   ansible.builtin.template:
     src: ../templates/grafana.ini.j2
-    dest: /etc/grafana/grafana.ini
-  notify: Restart Grafana
+    dest: /opt/grafana/grafana.ini
   no_log: true
+  notify: Restart grafana container
 
-- name: Deploy datasources provisioning
-  ansible.builtin.template:
-    src: ../templates/datasources.yaml.j2
-    dest: /etc/grafana/provisioning/datasources/datasources.yaml
-  notify: Restart Grafana
-  no_log: true
-
-- name: Deploy dashboards provisioning
-  ansible.builtin.template:
-    src: ../templates/dashboards.yaml.j2
-    dest: /etc/grafana/provisioning/dashboards/dashboards.yaml
-  notify: Restart Grafana
-
-- name: Deploy dashboard JSONs
-  ansible.builtin.copy:
-    src: "{{ item }}"
-    dest: /var/lib/grafana/dashboards/
-  with_items:
-    - ../files/main.json
-    - ../files/syslog.json
-    - ../files/backups.json
-    - ../files/mysql.json
-  notify: Restart Grafana
-
-- name: Start and enable Grafana
-  ansible.builtin.service:
-    name: grafana-server
-    state: started
-    enabled: true
+- name: Download grafana docker container
+  community.docker.docker_container:
+    image: grafana/grafana
+    name: grafana
+    published_ports: '{{ grafana_port }}:3000'
+    volumes: /opt/grafana:/etc/grafana

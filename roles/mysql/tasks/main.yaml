@@ -1,7 +1,6 @@
 - name: Install package mysql
   ansible.builtin.apt:
     name: mysql-server
-  notify: Restart mysql
 
 - name: Start and enable the mysql service
   ansible.builtin.service:
@@ -18,7 +17,6 @@
 - name: Install PyMySQL
   ansible.builtin.apt:
     name: python3-pymysql
-  notify: Restart mysql
 
 - name: Add MySQL database
   community.mysql.mysql_db:
@@ -60,8 +58,13 @@
     group: prometheus
   notify: 
     - Restart mysql exporter
-    - Start and enable mysql exporter
   no_log: true
+
+- name: Start and enable mysql exporter
+  ansible.builtin.service:
+    name: prometheus-mysqld-exporter
+    state: started
+    enabled: true
 
 - name: Create directory for dumping mysql backup files
   ansible.builtin.file:

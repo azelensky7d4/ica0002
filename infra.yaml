@@ -40,7 +40,7 @@
   hosts: web_servers
   roles:
     - agama
-    - uwsgi
+    # - uwsgi
     - nginx
     - agama_client
   tags:

@@ -46,3 +46,8 @@
     name: grafana
     published_ports: '{{ grafana_port }}:3000'
     volumes: /opt/grafana:/etc/grafana
+
+- name: Start agama
+  community.docker.docker_container:
+    name: grafana
+    state: started

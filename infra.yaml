@@ -3,7 +3,6 @@
   hosts: all
   roles:
     - init
-    - docker
   tags:
     - init
 
@@ -39,6 +38,7 @@
 - name: Web server
   hosts: web_servers
   roles:
+    - docker
     - agama
     # - uwsgi
     - nginx
@@ -58,6 +58,7 @@
 - name: Grafana
   hosts: grafana
   roles:
+    - docker
     - grafana
     - nginx
   tags:

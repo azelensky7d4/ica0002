@@ -55,10 +55,18 @@ grafana_port: 3001
 
 agama_influxdb_db_name: agama_logs
 agama_subnet: 192.168.42.0/23
+agama_container_count: 2
+agama_port: 8001
+
+keepalived_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          36663562653065376131656131333966643231393432646536303133643338373261333765656637
+          6665643937633032313134653061613661616335623966650a616331313237626636643435313564
+          35333237363262333432646330336565323139653330383838303365646230313932613633303763
+          3964356339643333620a646561666334343861386334326635303465356266376637393337316633
+          3731
 
 backup_server_ip: 192.168.42.132
 backup_server_name: backup
 backup_server_ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
 mysql_backup_host: "{{ groups['db_servers'] | reject('eq', mysql_host) | first | default(mysql_host) }}"
-
-agama_port: 8001

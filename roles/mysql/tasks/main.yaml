@@ -60,12 +60,6 @@
     - Restart mysql exporter
   no_log: true
 
-- name: Start and enable mysql exporter
-  ansible.builtin.service:
-    name: prometheus-mysqld-exporter
-    state: started
-    enabled: true
-
 - name: Create directory for dumping mysql backup files
   ansible.builtin.file:
     name: /home/backup/mysql
@@ -116,3 +110,9 @@
   notify:
     - Reset MySQL source
     - Reset MySQL replica
+
+- name: Start and enable mysql exporter
+  ansible.builtin.service:
+    name: prometheus-mysqld-exporter
+    state: started
+    enabled: true

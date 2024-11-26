@@ -47,6 +47,20 @@
     - agama
     - switchover
 
+- name: keepalived
+  hosts: web_servers
+  roles:
+    - keepalived
+  tags:
+    - keepalived
+
+- name: HAProxy
+  hosts: web_servers
+  roles:
+    - haproxy
+  tags:
+    - haproxy
+
 - name: Prometheus
   hosts: prometheus
   roles:

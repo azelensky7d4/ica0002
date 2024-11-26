@@ -1,0 +1,37 @@
+global_defs {
+        enable_script_security
+}
+vrrp_script check_haproxy {
+    script "/home/keepalived_script/vrrp_script"
+    weight 20
+    interval 1
+}
+vrrp_instance agama {
+    interface ens3
+    virtual_router_id 33
+
+    {% if ansible_facts['hostname'] == groups['web_servers'][0] %}
+    priority 100
+    {% else %}
+    priority 90
+    {% endif %}
+
+    advert_int 1
+    virtual_ipaddress {
+        {{ hostvars['azelensky7d4-1']['ansible_facts']['default_ipv4']['address'].split('.')[0] }}.{{ hostvars['azelensky7d4-1']['ansible_facts']['default_ipv4']['address'].split('.')[1] }}.{{ (hostvars['azelensky7d4-1']['ansible_facts']['default_ipv4']['address'].split('.')[2] | int) + 58 }}.{{ hostvars['azelensky7d4-1']['ansible_facts']['default_ipv4']['address'].split('.')[3] }}/24
+    }
+    unicast_peer {
+        {% for host in groups['web_servers'] %}
+        {% if host != inventory_hostname %}
+        {{ hostvars[host]['ansible_facts']['default_ipv4']['address'] }}
+        {% endif %}
+        {% endfor %}
+    }
+    track_script {
+        check_haproxy
+    }
+    authentication {
+        auth_type PASS
+        auth_pass YourSecurePassword
+    }
+}

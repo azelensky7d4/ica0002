@@ -36,15 +36,15 @@ scrape_configs:
   - job_name: 'bind9'
     static_configs:
       - targets:
-        {% for host in groups['prometheus'] %}
-        - '{{ host }}:9119'
+        {% for prometheus_host in groups['prometheus'] %}
+        - '{{ prometheus_host }}:9119'
         {% endfor %}
  
   - job_name: 'mysql'
     static_configs:
       - targets:
-        {% for host in groups['db_servers'] %}
-        - '{{ host }}:9104'
+        {% for db_host in groups['db_servers'] %}
+        - '{{ db_host }}:9104'
         {% endfor %}
   
   - job_name: 'nginx'
@@ -57,13 +57,26 @@ scrape_configs:
   - job_name: 'influxdb'
     static_configs:
       - targets:
-        {% for host in groups['influx'] %}
-        - '{{ host }}:9424'
+        {% for influx_host in groups['influx'] %}
+        - '{{ influx_host }}:9424'
         {% endfor %}
   
   - job_name: 'backup'
     static_configs:
       - targets:
         - 'backup.{{ domain_name }}:9111'
-
+  
+  - job_name: 'haproxy'
+    static_configs:
+      - targets:
+        {% for haproxy_host in groups['web_servers'] %}
+        - '{{ haproxy_host }}:9101'
+        {% endfor %}
+  
+  - job_name: 'keepalived'
+    static_configs:
+      - targets:
+        {% for keepalived_host in groups['web_servers'] %}
+        - '{{ keepalived_host }}:9165'
+        {% endfor %}
         

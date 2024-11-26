@@ -1,0 +1,11 @@
+[Unit]
+Description=keepalived prometheus exporter
+Documentation=https://github.com/mehdy/keepalived-exporter
+After=network-online.target
+
+[Service]
+User=root
+ExecStart=/usr/bin/keepalived-exporter
+
+[Install]
+WantedBy=multi-user.target

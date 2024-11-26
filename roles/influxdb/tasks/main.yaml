@@ -8,6 +8,12 @@
     repo: deb https://repos.influxdata.com/debian stable main stable main
     state: present
 
+- name: Ensure InfluxDB user exists
+  ansible.builtin.user:
+    name: influxdb
+    state: present
+    create_home: yes
+
 - name: Install influxdb
   ansible.builtin.apt:
     name: influxdb

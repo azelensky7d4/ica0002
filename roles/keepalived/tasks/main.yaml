@@ -1,0 +1,53 @@
+- name: Install keepalived package
+  ansible.builtin.apt:
+    name: keepalived
+
+- name: Create user keepalived_script
+  ansible.builtin.user:
+    name: keepalived_script
+    state: present
+    create_home: true
+
+- name: Deploy vrrp_script
+  ansible.builtin.copy:
+    src: ../files/vrrp_script
+    dest: /home/keepalived_script/vrrp_script
+    mode: '0755'
+
+# - name: Create /etc/keepalived_script directory
+#   ansible.builtin.file:
+#     path: /etc/keepalived_script
+#     state: directory
+
+- name: Deploy keepalived config
+  ansible.builtin.template:
+    src: ../templates/keepalived.conf.j2
+    dest: /etc/keepalived/keepalived.conf
+  notify: Restart keepalived
+
+- name: start and enable keepalived
+  ansible.builtin.service:
+    name: keepalived
+    state: started
+    enabled: true
+
+- name: Download keepalived prometheus exporter package
+  ansible.builtin.get_url:
+    url: https://github.com/mehdy/keepalived-exporter/releases/download/v1.4.0/keepalived-exporter_1.4.0_linux_amd64.deb
+    dest: /tmp/prometheus-keepalived-exporter.deb
+
+- name: Install prometheus keepalived exporter
+  ansible.builtin.apt:
+    deb: /tmp/prometheus-keepalived-exporter.deb
+
+- name: Deploy prometheus keepalived exporter service description
+  ansible.builtin.template:
+    src: ../templates/service-desc.j2
+    dest: /etc/systemd/system/prometheus-keepalived-exporter.service
+  notify: Reload systemd daemons
+
+- name: Start and enable prometheus-keepalived-exporter
+  ansible.builtin.service:
+    name: prometheus-keepalived-exporter
+    state: started
+    enabled: true

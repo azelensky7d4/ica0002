@@ -2,7 +2,7 @@
 # Due to shell escaping, to pass backslashes for regexes, you need to double
 # them (\\d for \d). If running under systemd, you need to double them again
 # (\\\\d to mean \d), and escape newlines too.
-ARGS="--web.external-url=http://{{ prometheus_host }}:{{ prometheus_port }}/prometheus"
+ARGS="--web.external-url=http://prometheus:{{ prometheus_port }}/prometheus"
 # ARGS="--web.external-url=http://{{hostvars['azelensky7d4-2']['ansible_host']}}:{{ hostvars['azelensky7d4-2']['ansible_port'] }}/prometheus"
 
 # prometheus supports the following options:

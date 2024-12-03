@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 3,
+  "id": 2,
   "links": [],
   "panels": [
     {
@@ -49,7 +49,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 9,
         "w": 12,
         "x": 0,
         "y": 0
@@ -128,7 +128,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
+        "h": 6,
         "w": 6,
         "x": 12,
         "y": 0
@@ -137,7 +137,7 @@
       "options": {
         "colorMode": "background_solid",
         "graphMode": "none",
-        "justifyMode": "auto",
+        "justifyMode": "center",
         "orientation": "auto",
         "percentChangeColorMode": "standard",
         "reduceOptions": {
@@ -148,7 +148,7 @@
           "values": false
         },
         "showPercentChange": false,
-        "textMode": "auto",
+        "textMode": "value",
         "wideLayout": true
       },
       "pluginVersion": "11.3.1",
@@ -226,7 +226,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
+        "h": 6,
         "w": 6,
         "x": 18,
         "y": 0
@@ -248,8 +248,8 @@
       "targets": [
         {
           "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "group by(instance) (rate(bind_resolver_queries_total{type=\"A\"}[1m]))",
+          "editorMode": "code",
+          "expr": "group by(type) (rate(bind_resolver_queries_total[1h]))",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "legendFormat": "__auto",
@@ -301,10 +301,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
+        "h": 6,
         "w": 6,
         "x": 12,
-        "y": 5
+        "y": 6
       },
       "id": 4,
       "options": {
@@ -399,10 +399,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
+        "h": 6,
         "w": 6,
         "x": 18,
-        "y": 5
+        "y": 6
       },
       "id": 14,
       "options": {
@@ -464,10 +464,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 9,
         "w": 12,
         "x": 0,
-        "y": 8
+        "y": 9
       },
       "id": 2,
       "options": {
@@ -546,7 +546,7 @@
         "h": 6,
         "w": 6,
         "x": 12,
-        "y": 10
+        "y": 12
       },
       "id": 5,
       "options": {
@@ -648,7 +648,7 @@
         "h": 6,
         "w": 6,
         "x": 18,
-        "y": 10
+        "y": 12
       },
       "id": 15,
       "options": {
@@ -737,10 +737,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 9,
         "w": 12,
         "x": 0,
-        "y": 16
+        "y": 18
       },
       "id": 7,
       "options": {
@@ -843,10 +843,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 9,
         "w": 12,
         "x": 12,
-        "y": 16
+        "y": 18
       },
       "id": 8,
       "options": {
@@ -910,7 +910,7 @@
               "viz": false
             },
             "insertNulls": false,
-            "lineInterpolation": "stepAfter",
+            "lineInterpolation": "linear",
             "lineStyle": {
               "fill": "solid"
             },
@@ -943,10 +943,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 7,
         "w": 12,
         "x": 0,
-        "y": 24
+        "y": 27
       },
       "id": 6,
       "options": {
@@ -985,7 +985,7 @@
           "measurement": "agama-stats",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT SUM(\"last_items\") FROM (\n    SELECT LAST(\"items\") AS \"last_items\" \n    FROM \"agama-stats\" \n    WHERE time >= now() - 24h AND \"name\" = 'azelensky7d4-1'\n    GROUP BY time(15m)\n) GROUP BY time(15m) fill(null)\n",
+          "query": "SELECT SUM(\"last_items\") FROM (\n    SELECT LAST(\"items\") AS \"last_items\" \n    FROM \"agama-stats\" \n    WHERE time >= now() - 24h\n    GROUP BY time(15m)\n) GROUP BY time(15m) fill(null)\n",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1039,10 +1039,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 7,
         "w": 12,
         "x": 12,
-        "y": 24
+        "y": 27
       },
       "id": 9,
       "options": {
@@ -1116,7 +1116,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 32
+        "y": 34
       },
       "id": 16,
       "options": {
@@ -1196,7 +1196,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 32
+        "y": 34
       },
       "id": 18,
       "options": {
@@ -1270,9 +1270,9 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 12,
+        "w": 6,
         "x": 0,
-        "y": 40
+        "y": 42
       },
       "id": 17,
       "options": {
@@ -1296,8 +1296,8 @@
       "targets": [
         {
           "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "group by(server) (haproxy_server_up)",
+          "editorMode": "code",
+          "expr": "haproxy_server_up{instance=\"azelensky7d4-1:9101\"}",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "legendFormat": "__auto",
@@ -1306,7 +1306,87 @@
           "useBackend": false
         }
       ],
-      "title": "HAProxy server status",
+      "title": "HAProxy server status 1",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PC55EA6E4E3D3BA0E"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "red",
+                  "index": 0,
+                  "text": "DOWN"
+                },
+                "1": {
+                  "color": "green",
+                  "index": 1,
+                  "text": "UP"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 6,
+        "y": 42
+      },
+      "id": 20,
+      "options": {
+        "colorMode": "background_solid",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.3.1",
+      "targets": [
+        {
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "haproxy_server_up{instance=\"azelensky7d4-2:9101\"}",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A",
+          "useBackend": false
+        }
+      ],
+      "title": "HAProxy server status 2",
       "type": "stat"
     },
     {
@@ -1357,7 +1437,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 40
+        "y": 42
       },
       "id": 19,
       "options": {
@@ -1405,6 +1485,6 @@
   "timezone": "browser",
   "title": "Main",
   "uid": "de11czudpcnpcb",
-  "version": 1,
+  "version": 3,
   "weekStart": ""
 }

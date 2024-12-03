@@ -29,3 +29,18 @@
     name: prometheus-haproxy-exporter
     state: started
     enabled: true
+
+- name: Add CNAME record to DNS master
+  community.general.nsupdate:
+    server: "{{ hostvars[groups['dns_masters'][0]]['ansible_default_ipv4']['address'] }}"
+    key_name: "nsupdate.key"
+    key_secret: "{{ nsupdate_key }}"
+    key_algorithm: "hmac-sha256"
+    zone: amogus.sus
+    record: "{{ item.alias }}"
+    type: CNAME
+    value: "{{ item.target }}"
+    state: present
+  loop:
+    - { alias: "lb-1", target: "{{ groups['haproxy'][0] }}" }
+    - { alias: "lb-2", target: "{{ groups['haproxy'][1] }}" }

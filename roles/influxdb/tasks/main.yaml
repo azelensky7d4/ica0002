@@ -79,3 +79,17 @@
     src: ../templates/influxdb-backup-cron.j2
     dest: /etc/cron.d/influxdb-backup
   notify: Restart cron
+
+- name: Add CNAME record to DNS master
+  community.general.nsupdate:
+    server: "{{ hostvars[groups['dns_masters'][0]]['ansible_default_ipv4']['address'] }}"
+    key_name: "nsupdate.key"
+    key_secret: "{{ nsupdate_key }}"
+    key_algorithm: "hmac-sha256"
+    zone: amogus.sus
+    record: "{{ item.alias }}"
+    type: CNAME
+    value: "{{ item.target }}"
+    state: present
+  loop:
+    - { alias: "influxdb", target: "{{ groups['influx'][0] }}" }

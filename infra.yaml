@@ -19,6 +19,7 @@
     - resolv
   tags:
     - resolv
+    - dns
 
 - name: Database server
   hosts: db_servers
@@ -55,7 +56,7 @@
     - keepalived
 
 - name: HAProxy
-  hosts: web_servers
+  hosts: haproxy
   roles:
     - haproxy
   tags:

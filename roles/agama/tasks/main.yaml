@@ -18,16 +18,6 @@
     build:
       path: /opt/agama
 
-# - name: Start agama
-#   community.docker.docker_container:
-#     image: agama
-#     name: agama
-#     state: started
-#     published_ports: '{{ agama_port }}:8000'
-#     env:
-#       AGAMA_DATABASE_URI: mysql+pymysql://{{ mysql_user }}:{{ mysql_password }}@{{ mysql_host }}/{{ mysql_database }}
-#   no_log: true
-
 - name: Start agama containers
   community.docker.docker_container:
     image: agama
@@ -38,3 +28,18 @@
       AGAMA_DATABASE_URI: mysql+pymysql://{{ mysql_user }}:{{ mysql_password }}@{{ mysql_host }}/{{ mysql_database }}
   no_log: true
   loop: "{{ range(0, agama_container_count) | list }}"
+
+- name: Add CNAME record to DNS master
+  community.general.nsupdate:
+    server: "{{ hostvars[groups['dns_masters'][0]]['ansible_default_ipv4']['address'] }}"
+    key_name: "nsupdate.key"
+    key_secret: "{{ nsupdate_key }}"
+    key_algorithm: "hmac-sha256"
+    zone: amogus.sus
+    record: "{{ item.alias }}"
+    type: CNAME
+    value: "{{ item.target }}"
+    state: present
+  loop:
+    - { alias: "www-1", target: "{{ groups['web_servers'][0] }}" }
+    - { alias: "www-2", target: "{{ groups['web_servers'][1] }}" }

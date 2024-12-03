@@ -58,7 +58,7 @@
     key_name: "nsupdate.key"
     key_secret: "{{ nsupdate_key }}"
     key_algorithm: "hmac-sha256"
-    zone: amogus.sus
+    zone: "{{ domain_name }}"
     record: "{{ item.alias }}"
     type: CNAME
     value: "{{ item.target }}"

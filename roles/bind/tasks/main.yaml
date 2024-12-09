@@ -2,23 +2,15 @@
   ansible.builtin.apt:
     name: bind9
 
+- name: Install dnspython
+  ansible.builtin.apt:
+    name: python3-dnspython
+
 - name: Start and Enable bind9
   ansible.builtin.service:
     name: bind9
     state: started
     enabled: true
-
-- name: Deploy bind9 global options
-  ansible.builtin.template:
-    src: ../templates/bind_conf.j2
-    dest: /etc/bind/named.conf.options
-  notify: Restart bind9
-
-- name: Deploy bind9 zones config
-  ansible.builtin.template:
-    src: ../templates/bind_named_conf_local.j2
-    dest: /etc/bind/named.conf.local
-  notify: Restart bind9
 
 - name: Deploy master zone file
   ansible.builtin.template:
@@ -40,21 +32,17 @@
     - Apply zone file
     - Restart bind9
 
-- name: Install dnspython
-  ansible.builtin.apt:
-    name: python3-dnspython
+- name: Deploy bind9 global options
+  ansible.builtin.template:
+    src: ../templates/bind_conf.j2
+    dest: /etc/bind/named.conf.options
+  notify: Restart bind9
 
-- name: Add backup server A record
-  community.general.nsupdate:
-    server: "{{ hostvars[groups['dns_masters'][0]]['ansible_default_ipv4']['address'] }}"
-    key_name: "nsupdate.key"
-    key_secret: "{{ nsupdate_key }}"
-    key_algorithm: "hmac-sha256"
-    zone: "{{ domain_name }}"
-    record: "{{ backup_server_name }}"
-    type: A
-    value: "{{ backup_server_ip }}"
-    state: present
+- name: Deploy bind9 zones config
+  ansible.builtin.template:
+    src: ../templates/bind_named_conf_local.j2
+    dest: /etc/bind/named.conf.local
+  notify: Restart bind9
 
 - name: Check if bind exporter is already installed
   ansible.builtin.stat:
@@ -92,6 +80,21 @@
     name: prometheus-bind9-exporter
     state: started
     enabled: true
+
+- name: Force bind restart
+  meta: flush_handlers
+
+- name: Add backup server A record
+  community.general.nsupdate:
+    server: "{{ hostvars[groups['dns_masters'][0]]['ansible_default_ipv4']['address'] }}"
+    key_name: "nsupdate.key"
+    key_secret: "{{ nsupdate_key }}"
+    key_algorithm: "hmac-sha256"
+    zone: "{{ domain_name }}"
+    record: "{{ backup_server_name }}"
+    type: A
+    value: "{{ backup_server_ip }}"
+    state: present
 
 - name: Add CNAME record to DNS master
   community.general.nsupdate:

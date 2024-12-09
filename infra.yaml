@@ -14,7 +14,7 @@
     - dns
 
 - name: Name resolution
-  hosts: all
+  hosts: dns_servers
   roles:
     - resolv
   tags:

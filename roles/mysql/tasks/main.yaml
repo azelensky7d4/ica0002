@@ -2,17 +2,17 @@
   ansible.builtin.apt:
     name: mysql-server
 
-- name: Start and enable the mysql service
-  ansible.builtin.service:
-    name: mysql
-    state: started
-    enabled: true
-
 - name: Override mysql config
   ansible.builtin.template:
     src: ../templates/mysql_config.j2
     dest: /etc/mysql/mysql.conf.d/override.cnf
   notify: Restart mysql
+
+- name: Start and enable the mysql service
+  ansible.builtin.service:
+    name: mysql
+    state: started
+    enabled: true
 
 - name: Install PyMySQL
   ansible.builtin.apt:

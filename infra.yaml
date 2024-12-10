@@ -41,12 +41,12 @@
   roles:
     - docker
     - agama
-    # - uwsgi
     - nginx
     - agama_client
   tags:
     - agama
     - switchover
+    - agama-scale
 
 - name: keepalived
   hosts: web_servers
@@ -61,6 +61,7 @@
     - haproxy
   tags:
     - haproxy
+    - agama-scale
 
 - name: Prometheus
   hosts: prometheus

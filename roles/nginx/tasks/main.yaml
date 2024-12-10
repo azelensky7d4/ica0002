@@ -6,7 +6,6 @@
   ansible.builtin.template:
     src: ../files/default.j2
     dest: /etc/nginx/sites-enabled/default
-    # validate: nginx -t -c %s
   notify: Restart Nginx
 
 - name: Force nginx restart

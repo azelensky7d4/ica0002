@@ -14,11 +14,6 @@
     dest: /home/keepalived_script/vrrp_script
     mode: '0755'
 
-# - name: Create /etc/keepalived_script directory
-#   ansible.builtin.file:
-#     path: /etc/keepalived_script
-#     state: directory
-
 - name: Deploy keepalived config
   ansible.builtin.template:
     src: ../templates/keepalived.conf.j2

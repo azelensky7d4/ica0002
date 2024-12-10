@@ -33,7 +33,7 @@ options {
 
 // Open port 8053 for prometheus-bind-exporter
 statistics-channels {
-  inet 127.0.0.1 port 8053 allow { 127.0.0.1; };
+  inet localhost port 8053 allow { localhost; };
 };
 
 key "transfer.key" {

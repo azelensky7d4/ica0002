@@ -1,4 +1,21 @@
 ---
+- name: Gather facts about all
+  hosts: all
+  roles:
+    - facts
+  tags:
+    - dns
+    - db
+    - influx
+    - agama
+    - keepalived
+    - haproxy
+    - grafana
+    - prometheus
+    - agama-scale
+    - switchover
+    - gather-facts
+
 - name: Initial setup
   hosts: all
   roles:
@@ -42,14 +59,21 @@
     - docker
     - agama
     - nginx
-    - agama_client
   tags:
     - agama
     - switchover
     - agama-scale
 
+- name: Agama client
+  hosts: agama_client
+  roles:
+    - agama_client
+  tags:
+    - agama-client
+
+
 - name: keepalived
-  hosts: web_servers
+  hosts: keepalived
   roles:
     - keepalived
   tags:

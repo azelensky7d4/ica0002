@@ -23,11 +23,18 @@
     image: agama
     name: "agama_{{ item }}"
     state: started
+    restart_policy: "always"
     published_ports: "{{ agama_port + item }}:8000"
     env:
       AGAMA_DATABASE_URI: mysql+pymysql://{{ mysql_user }}:{{ mysql_password }}@{{ mysql_host }}/{{ mysql_database }}
   no_log: true
   loop: "{{ range(0, agama_container_count) | list }}"
+
+- name: Gather facts for DNS master
+  ansible.builtin.setup:
+    gather_subset: all
+  delegate_to: "{{ groups['dns_masters'][0] }}"
+  run_once: true
 
 - name: Add CNAME record to DNS master
   community.general.nsupdate:

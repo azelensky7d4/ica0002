@@ -2,12 +2,6 @@
   ansible.builtin.apt:
     name: prometheus
 
-- name: Start and enable the prometheus service
-  ansible.builtin.service:
-    name: prometheus
-    state: started
-    enabled: true
-
 - name: Deploy prometheus config
   ansible.builtin.template:
     src: ../templates/prometheus_conf.j2
@@ -22,6 +16,12 @@
     src: ../templates/prometheus_start.j2
     dest: /etc/default/prometheus
   notify: Restart prometheus
+
+- name: Start and enable the prometheus service
+  ansible.builtin.service:
+    name: prometheus
+    state: started
+    enabled: true
 
 - name: Add CNAME record to DNS master
   community.general.nsupdate:

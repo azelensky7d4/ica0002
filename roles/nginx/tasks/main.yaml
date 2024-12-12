@@ -8,7 +8,7 @@
     dest: /etc/nginx/sites-enabled/default
   notify: Restart Nginx
 
-- name: Force nginx restart
+- name: Force nginx restart if changed
   meta: flush_handlers
 
 - name: Start and enable the nginx service

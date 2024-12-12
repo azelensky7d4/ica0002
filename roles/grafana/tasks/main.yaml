@@ -47,10 +47,11 @@
     published_ports: '{{ grafana_port }}:3000'
     volumes: /opt/grafana:/etc/grafana
 
-- name: Start agama
+- name: Start grafana
   community.docker.docker_container:
     name: grafana
     state: started
+    restart_policy: "always"
 
 - name: Add CNAME record to DNS master
   community.general.nsupdate:

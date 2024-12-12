@@ -6,12 +6,6 @@
   ansible.builtin.apt:
     name: python3-dnspython
 
-- name: Start and Enable bind9
-  ansible.builtin.service:
-    name: bind9
-    state: started
-    enabled: true
-
 - name: Deploy master zone file
   ansible.builtin.template:
     src: ../templates/master_zone.j2
@@ -25,7 +19,7 @@
 - name: Deploy reverse zone file
   ansible.builtin.template:
     src: ../templates/ptr_zone.j2
-    dest: /var/cache/bind/db.rev.j2
+    dest: /var/cache/bind/db.rev
     force: false
     mode: "0766"
   notify: 
@@ -81,8 +75,14 @@
     state: started
     enabled: true
 
-- name: Force bind restart
+- name: Force bind restart if changed
   meta: flush_handlers
+
+- name: Start and Enable bind9
+  ansible.builtin.service:
+    name: bind9
+    state: started
+    enabled: true
 
 - name: Add backup server A record
   community.general.nsupdate:
@@ -110,3 +110,4 @@
   loop:
     - { alias: "ns-1", target: "{{ groups['dns_servers'][0] }}" }
     - { alias: "ns-2", target: "{{ groups['dns_servers'][1] }}" }
+    - { alias: "ns-3", target: "{{ groups['dns_servers'][2] }}" }

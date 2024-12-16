@@ -29,11 +29,11 @@
 - name: Download keepalived prometheus exporter package
   ansible.builtin.get_url:
     url: https://github.com/mehdy/keepalived-exporter/releases/download/v1.4.0/keepalived-exporter_1.4.0_linux_amd64.deb
-    dest: /tmp/prometheus-keepalived-exporter.deb
+    dest: /opt/prometheus-keepalived-exporter.deb
 
 - name: Install prometheus keepalived exporter
   ansible.builtin.apt:
-    deb: /tmp/prometheus-keepalived-exporter.deb
+    deb: /opt/prometheus-keepalived-exporter.deb
 
 - name: Deploy prometheus keepalived exporter service description
   ansible.builtin.template:

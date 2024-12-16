@@ -35,6 +35,7 @@
     state: present
     priv: "{{ mysql_database }}.*:ALL"
     login_unix_socket: /var/run/mysqld/mysqld.sock
+  no_log: true
 
 - name: Create MySQL user for prometheus exporter
   community.mysql.mysql_user:
@@ -44,6 +45,7 @@
     state: present
     priv: "{{ mysql_database }}.*:ALL/*.*:REPLICATION CLIENT" #all priveleges for agama table, replication priveleges for entire db (doesn't work with just one table)
     login_unix_socket: /var/run/mysqld/mysqld.sock
+  no_log: true
 
 - name: Install prometheus_mysql_exporter
   ansible.builtin.apt:
@@ -76,6 +78,7 @@
     state: present
     login_unix_socket: /var/run/mysqld/mysqld.sock
     host: "%"
+  no_log: true
 
 - name: Deploy MySQL backup config
   ansible.builtin.template:
@@ -84,6 +87,7 @@
     owner: backup
     group: backup
     mode: '0700'
+  no_log: true
   notify: Restart mysql
 
 - name: Deploy cron backup schedule

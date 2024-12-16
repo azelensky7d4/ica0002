@@ -29,7 +29,7 @@ zone "168.192.in-addr.arpa" {
 {% endfor %}
     };
 {% endif %}
-	file "/var/cache/bind/db.rev.j2";
+	file "/var/cache/bind/db.rev";
 };
 
 {% if inventory_hostname in groups['dns_slaves'] %}

@@ -52,6 +52,7 @@
     - influxdb
   tags:
     - influx
+    - telegraf
 
 - name: Web server
   hosts: web_servers
@@ -63,6 +64,7 @@
     - agama
     - switchover
     - agama-scale
+    - nginx12
 
 - name: Agama client
   hosts: agama_client
@@ -103,3 +105,11 @@
     - nginx
   tags:
     - grafana
+    - nginx3
+
+- name: Nginx
+  hosts: nginx
+  roles:
+    - nginx
+  tags:
+    - nginx

@@ -46,3 +46,18 @@
     name: prometheus-keepalived-exporter
     state: started
     enabled: true
+
+- name: Add CNAME records hor hosts to DNS master
+  community.general.nsupdate:
+    server: "{{ hostvars[groups['dns_masters'][0]]['ansible_default_ipv4']['address'] }}"
+    key_name: "nsupdate.key"
+    key_secret: "{{ nsupdate_key }}"
+    key_algorithm: "hmac-sha256"
+    zone: "{{ domain_name }}"
+    record: "{{ item.alias }}"
+    type: CNAME
+    value: "{{ item.target }}"
+    state: present
+  loop:
+    - { alias: "ka-1", target: "{{ groups['keepalived'][0] }}" }
+    - { alias: "ka-2", target: "{{ groups['keepalived'][1] }}" }

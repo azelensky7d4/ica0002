@@ -19,8 +19,6 @@ MySQL backups are created every 24 hours; it takes up to 1 minute to create and 
 
 InfluxDB backups are created every 24 hours; it takes up to 2 minutes to create and store the backup. The backups are made at 00:15 UTC.
 
-All backups are started automatically by 03:00 UTC.
-
 Backup RPO (recovery point objective) is:
  - 24 hours for MySQL
  - 24 hours for InfluxDB

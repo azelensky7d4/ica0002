@@ -32,6 +32,6 @@ vrrp_instance agama {
     }
     authentication {
         auth_type PASS
-        auth_pass YourSecurePassword
+        auth_pass {{ keepalived_password }}
     }
 }

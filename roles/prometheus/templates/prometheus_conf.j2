@@ -30,35 +30,35 @@ scrape_configs:
     static_configs:
       - targets:
         {% for host in groups['all'] %}
-        - '{{ host }}:9100'
+        - 'host-{{ loop.index }}:9100'
         {% endfor %}
   
   - job_name: 'bind9'
     static_configs:
       - targets:
         {% for prometheus_host in groups['dns_servers'] %}
-        - '{{ prometheus_host }}:9119'
+        - 'ns-{{ loop.index }}:9119'
         {% endfor %}
  
   - job_name: 'mysql'
     static_configs:
       - targets:
         {% for db_host in groups['db_servers'] %}
-        - '{{ db_host }}:9104'
+        - 'db-{{ loop.index }}:9104'
         {% endfor %}
   
   - job_name: 'nginx'
     static_configs:
       - targets:
         {% for nginx_host in groups['nginx'] %}
-        - '{{ nginx_host }}:9113'
+        - 'nginx-{{ loop.index }}:9113'
         {% endfor %}
   
   - job_name: 'influxdb'
     static_configs:
       - targets:
         {% for influx_host in groups['influx'] %}
-        - '{{ influx_host }}:9424'
+        - 'influxdb:9424'
         {% endfor %}
   
   - job_name: 'backup'
@@ -70,13 +70,13 @@ scrape_configs:
     static_configs:
       - targets:
         {% for haproxy_host in groups['web_servers'] %}
-        - '{{ haproxy_host }}:9101'
+        - 'lb-{{ loop.index }}:9101'
         {% endfor %}
   
   - job_name: 'keepalived'
     static_configs:
       - targets:
         {% for keepalived_host in groups['web_servers'] %}
-        - '{{ keepalived_host }}:9165'
+        - 'ka-{{ loop.index }}:9165'
         {% endfor %}
         

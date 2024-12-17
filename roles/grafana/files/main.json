@@ -1303,9 +1303,9 @@
       "targets": [
         {
           "disableTextWrap": false,
-          "editorMode": "builder",
+          "editorMode": "code",
           "exemplar": false,
-          "expr": "haproxy_server_up{instance=\"azelensky7d4-1:9101\"}",
+          "expr": "haproxy_server_up{instance=\"lb-1:9101\"}",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": true,
@@ -1385,9 +1385,9 @@
       "targets": [
         {
           "disableTextWrap": false,
-          "editorMode": "builder",
+          "editorMode": "code",
           "exemplar": false,
-          "expr": "haproxy_server_up{instance=\"azelensky7d4-2:9101\"}",
+          "expr": "haproxy_server_up{instance=\"lb-2:9101\"}",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": true,
@@ -1498,6 +1498,6 @@
   "timezone": "browser",
   "title": "Main",
   "uid": "de11czudpcnpcb",
-  "version": 2,
+  "version": 1,
   "weekStart": ""
 }

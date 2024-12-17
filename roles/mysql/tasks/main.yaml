@@ -41,9 +41,9 @@
   community.mysql.mysql_user:
     name: 'exporter'
     password: "{{ mysql_exporter_password }}"
-    host: "%"
+    host: "localhost"
     state: present
-    priv: "{{ mysql_database }}.*:ALL/*.*:REPLICATION CLIENT" #all priveleges for agama table, replication priveleges for entire db (doesn't work with just one table)
+    priv: "*.*:PROCESS,REPLICATION CLIENT,SELECT" #all priveleges for agama table, replication priveleges for entire db (doesn't work with just one table) aaaaaa
     login_unix_socket: /var/run/mysqld/mysqld.sock
   no_log: true
 
@@ -74,10 +74,10 @@
   community.mysql.mysql_user:
     name: backup
     password: "{{ mysql_backup_password }}"
-    priv: "agama.*:LOCK TABLES,SELECT"
+    priv: "{{ mysql_database }}.*:LOCK TABLES,SELECT" # aa
     state: present
     login_unix_socket: /var/run/mysqld/mysqld.sock
-    host: "%"
+    host: "localhost"
   no_log: true
 
 - name: Deploy MySQL backup config

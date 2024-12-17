@@ -36,18 +36,17 @@
   delegate_to: "{{ groups['dns_masters'][0] }}"
   run_once: true
 
-- name: Add CNAME record to DNS master
-  community.general.nsupdate:
-    server: "{{ hostvars[groups['dns_masters'][0]]['ansible_default_ipv4']['address'] }}"
-    key_name: "nsupdate.key"
-    key_secret: "{{ nsupdate_key }}"
-    key_algorithm: "hmac-sha256"
-    zone: "{{ domain_name }}"
-    record: "{{ item.alias }}"
-    type: CNAME
-    value: "{{ item.target }}"
-    state: present
-  loop:
-    - { alias: "www-1", target: "{{ groups['all'][0] }}" }
-    - { alias: "www-2", target: "{{ groups['all'][1] }}" }
-    - { alias: "www-3", target: "{{ groups['all'][2] }}" }
+# - name: Add CNAME record to DNS master
+#   community.general.nsupdate:
+#     server: "{{ hostvars[groups['dns_masters'][0]]['ansible_default_ipv4']['address'] }}"
+#     key_name: "nsupdate.key"
+#     key_secret: "{{ nsupdate_key }}"
+#     key_algorithm: "hmac-sha256"
+#     zone: "{{ domain_name }}"
+#     record: "{{ item.alias }}"
+#     type: CNAME
+#     value: "{{ item.target }}"
+#     state: present
+#   loop:
+#     - { alias: "www-1", target: "{{ groups['web_servers'][0] }}" }
+#     - { alias: "www-2", target: "{{ groups['web_servers'][1] }}" }

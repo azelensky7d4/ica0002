@@ -48,5 +48,6 @@
     value: "{{ item.target }}"
     state: present
   loop:
-    - { alias: "www-1", target: "{{ groups['web_servers'][0] }}" }
-    - { alias: "www-2", target: "{{ groups['web_servers'][1] }}" }
+    - { alias: "www-1", target: "{{ groups['all'][0] }}" }
+    - { alias: "www-2", target: "{{ groups['all'][1] }}" }
+    - { alias: "www-3", target: "{{ groups['all'][2] }}" }

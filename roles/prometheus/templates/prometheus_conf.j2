@@ -30,7 +30,7 @@ scrape_configs:
     static_configs:
       - targets:
         {% for host in groups['all'] %}
-        - 'host-{{ loop.index }}:9100'
+        - '{{ host }}:9100'
         {% endfor %}
   
   - job_name: 'bind9'
@@ -50,8 +50,8 @@ scrape_configs:
   - job_name: 'nginx'
     static_configs:
       - targets:
-        {% for nginx_host in groups['nginx'] %}
-        - 'nginx-{{ loop.index }}:9113'
+        {% for nginx_host in groups['all'] %}
+        - 'www-{{ loop.index }}:9113'
         {% endfor %}
   
   - job_name: 'influxdb'
@@ -77,6 +77,6 @@ scrape_configs:
     static_configs:
       - targets:
         {% for keepalived_host in groups['web_servers'] %}
-        - 'ka-{{ loop.index }}:9165'
+        - 'lb-{{ loop.index }}:9165'
         {% endfor %}
         
